@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Mark Twain-->
+        <!--Congress Table View Controller-->
         <scene sceneID="axL-lN-8n6">
             <objects>
                 <tableViewController id="Qfm-5Q-qMV" customClass="CongressTableViewController" customModule="LibraryOfCongress" customModuleProvider="target" sceneMemberID="viewController">
@@ -46,9 +46,20 @@
                             <outlet property="delegate" destination="Qfm-5Q-qMV" id="wpF-iJ-6W1"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Mark Twain" id="WVt-a3-73u">
+                    <navigationItem key="navigationItem" id="WVt-a3-73u">
+                        <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title="Back" id="bJH-Ml-KqI"/>
+                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Mark Twain" borderStyle="roundedRect" placeholder="Search Library of Congress" textAlignment="natural" minimumFontSize="17" id="rpR-kj-Cw5">
+                            <rect key="frame" x="89" y="7" width="197" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
                     </navigationItem>
+                    <connections>
+                        <outlet property="searchField" destination="rpR-kj-Cw5" id="Rc1-ig-dqK"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NzB-Sm-MsS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -28,7 +28,8 @@ internal struct Congress {
 			
 			// 2. begin parsing to our array of user data objects
 			guard let response: [String : Any] = jsonData as? [String : Any],
-				let results: [[String : Any]] = response["results"] as? [[String : Any]] else {
+				let results: [[String : Any]] = response["results"] as? [[String : Any]]
+				else {
 					throw CongressModelParseError.results
 			}
 			print("We've got \(results.count) results!")
@@ -60,17 +61,13 @@ internal struct Congress {
 						throw CongressModelParseError.imageThumb
 				}
 				
-				// 6. parse out subject array
-//				guard let subjects: [String] = congressResult["subjects"] as? [String]
-//					else {
-//						throw CongressModelParseError.subjects
-//				}
+				// 6. parse out subject array down there
 				
 				let validInfo: Congress = Congress(
 					title : title,
 					imageURL : "http:\(imageURL)",
 					thumbURL : "http:\(thumbURL)",
-					subjects : (congressResult["subjects"] as? [String]) ?? ["N/A"]//subjects ?? ["N/A"]
+					subjects : (congressResult["subjects"] as? [String]) ?? ["N/A"]
 				)
 				
 				detailToReturn?.append(validInfo)

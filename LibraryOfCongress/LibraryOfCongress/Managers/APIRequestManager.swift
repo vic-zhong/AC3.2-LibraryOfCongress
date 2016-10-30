@@ -8,16 +8,19 @@
 
 import Foundation
 
-internal class APIRequestManager {
+class APIRequestManager {
 	private static let congressAPIEndpoint: URL = URL(string: "https://loc.gov/pictures/search/?q=mark%20twain&fo=json")!
 	
 	internal static let manager: APIRequestManager = APIRequestManager()
 	private init() {}
 	
-	func getCongressData(completion: @escaping ((Data?)->Void)) {
+	func getCongressData(searchString: String = "Mark Twain", completion: @escaping ((Data?)->Void)) {
 		
+		let endpointString = searchString.replacingOccurrences(of: " ", with: "%20")
+		let endpoint = URL(string: "https://loc.gov/pictures/search/?q=\(endpointString)&fo=json")!
 		let session: URLSession = URLSession(configuration: URLSessionConfiguration.default)
-		session.dataTask(with: APIRequestManager.congressAPIEndpoint) { (data: Data?, response: URLResponse?, error: Error?) in
+		
+		session.dataTask(with: endpoint) { (data: Data?, response: URLResponse?, error: Error?) in
 			if error != nil {
 				print("Error encountered in API request: \(error?.localizedDescription)")
 			}
@@ -26,8 +29,8 @@ internal class APIRequestManager {
 				print("Data returned in response")
 				completion(data)
 			}
-			
 			}.resume()
+		
 	}
 	
 	func downloadImage(urlString: String, callback: @escaping (Data) -> () ) {
@@ -40,7 +43,6 @@ internal class APIRequestManager {
 			}
 			guard let imageData = data else { return }
 			callback(imageData)
-			
 			}.resume()
 	}
 	

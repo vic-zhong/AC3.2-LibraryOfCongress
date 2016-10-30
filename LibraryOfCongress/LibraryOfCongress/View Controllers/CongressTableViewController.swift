@@ -8,27 +8,47 @@
 
 import UIKit
 
-class CongressTableViewController: UITableViewController {
+class CongressTableViewController: UITableViewController, UITextFieldDelegate {
 	
 	var congress = [Congress]()
 	
+	@IBOutlet weak var searchField: UITextField!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		loadCongress()
+		self.searchField.delegate = self
 	}
 	
-	internal func loadCongress() {
-		APIRequestManager.manager.getCongressData { (data) in
+	//	internal func loadCongress() {
+	//		APIRequestManager.manager.getCongressData { (data) in
+	//			if data != nil {
+	//
+	//				if let congress = Congress.congress(from: data!) {
+	//					print("We've got info! \(congress)")
+	//
+	//					self.congress = congress
+	//
+	//					DispatchQueue.main.async {
+	//						self.tableView.reloadData()
+	//					}
+	//				}
+	//			}
+	//		}
+	//	}
+	
+	internal func loadCongress(searchString: String = "Mark Twain") {
+		APIRequestManager.manager.getCongressData(searchString: searchString) { (data) in
 			if data != nil {
 				
 				if let congress = Congress.congress(from: data!) {
-					print("We've got info! \(congress)")
+					print("We've got info! \(congress.count)")
 					
 					self.congress = congress
 					
 					DispatchQueue.main.async {
 						self.tableView.reloadData()
+
 					}
 				}
 			}
@@ -79,6 +99,18 @@ class CongressTableViewController: UITableViewController {
 				detailViewController.selectedCongressData = dataAtRow
 			}
 		}
+	}
+	
+	// MARK: - UITextField Stuff
+	
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		self.view.endEditing(true)
+		if let search = searchField.text {
+			loadCongress(searchString: search)
+			
+		}
+		
+		return true
 	}
 	
 }
