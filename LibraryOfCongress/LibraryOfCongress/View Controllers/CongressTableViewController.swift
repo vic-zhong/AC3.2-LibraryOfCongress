@@ -59,12 +59,10 @@ class CongressTableViewController: UITableViewController, UITextFieldDelegate {
 	// MARK: - Table view data source
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		// #warning Incomplete implementation, return the number of sections
 		return 1
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		// #warning Incomplete implementation, return the number of rows
 		return congress.count
 	}
 	
@@ -72,7 +70,7 @@ class CongressTableViewController: UITableViewController, UITextFieldDelegate {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "cellReuse", for: indexPath)
 		
-		let congressAtRow = congress[indexPath.row]
+		let congressAtRow = congress.sorted() {$0.title < $1.title} [indexPath.row]
 		
 		cell.textLabel?.text = congressAtRow.title
 		
@@ -95,7 +93,7 @@ class CongressTableViewController: UITableViewController, UITextFieldDelegate {
 			if segue.identifier == "detailSegue" {
 				let detailViewController : DetailViewController = segue.destination as! DetailViewController
 				let cellIndexPath: IndexPath = self.tableView.indexPath(for: tappedCongressCell)!
-				let dataAtRow = congress[cellIndexPath.row]
+				let dataAtRow = congress.sorted() {$0.title < $1.title } [cellIndexPath.row]
 				detailViewController.selectedCongressData = dataAtRow
 			}
 		}

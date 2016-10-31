@@ -9,12 +9,11 @@
 import Foundation
 
 class APIRequestManager {
-	private static let congressAPIEndpoint: URL = URL(string: "https://loc.gov/pictures/search/?q=mark%20twain&fo=json")!
 	
 	internal static let manager: APIRequestManager = APIRequestManager()
 	private init() {}
 	
-	func getCongressData(searchString: String = "Mark Twain", completion: @escaping ((Data?)->Void)) {
+	func getCongressData(searchString: String, completion: @escaping ((Data?)->Void)) {
 		
 		let endpointString = searchString.replacingOccurrences(of: " ", with: "%20")
 		let endpoint = URL(string: "https://loc.gov/pictures/search/?q=\(endpointString)&fo=json")!
@@ -30,7 +29,6 @@ class APIRequestManager {
 				completion(data)
 			}
 			}.resume()
-		
 	}
 	
 	func downloadImage(urlString: String, callback: @escaping (Data) -> () ) {

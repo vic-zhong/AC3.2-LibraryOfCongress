@@ -50,7 +50,7 @@
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title="Back" id="bJH-Ml-KqI"/>
                         <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Mark Twain" borderStyle="roundedRect" placeholder="Search Library of Congress" textAlignment="natural" minimumFontSize="17" id="rpR-kj-Cw5">
-                            <rect key="frame" x="89" y="7" width="197" height="30"/>
+                            <rect key="frame" x="27" y="7" width="321" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -63,7 +63,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NzB-Sm-MsS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1311" y="83"/>
+            <point key="canvasLocation" x="1309.5999999999999" y="82.3088455772114"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="hJQ-z3-wlC">
