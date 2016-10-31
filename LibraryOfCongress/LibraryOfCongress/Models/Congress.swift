@@ -9,7 +9,7 @@
 import Foundation
 
 internal enum CongressModelParseError: Error {
-	case results, title, image, imageBig, imageThumb, subjects
+	case results, title, image, imageBig, imageThumb, subjects, hits
 }
 
 internal struct Congress {
@@ -81,6 +81,31 @@ internal struct Congress {
 		}
 		
 		return nil
+	}
+	
+	static func hits(from data: Data) -> Int? {
+		
+		do {
+			// 1. Attempt to serialize data
+			let jsonData: Any = try JSONSerialization.jsonObject(with: data, options: [])
+			
+			// 2. Begin parsing
+			guard let response: [String : Any] = jsonData as? [String : Any],
+				let results: [String : Any] = response["search"] as? [String : Any]
+				else {
+					throw CongressModelParseError.hits
+			}
+			
+			// 3. Yup, I just wanted this one value
+			if (results["hits"] as? Int) != nil { return results["hits"] as? Int }
+			else {
+				return 0
+			}
+		}
+		catch {
+			print("Error encountered with JSONSerialization: \(error)")
+		}
+		return 0
 	}
 	
 }

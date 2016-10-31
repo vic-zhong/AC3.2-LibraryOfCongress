@@ -11,6 +11,7 @@ import UIKit
 class CongressTableViewController: UITableViewController, UITextFieldDelegate {
 	
 	var congress = [Congress]()
+	var hitsCount = 0
 	
 	@IBOutlet weak var searchField: UITextField!
 	
@@ -19,23 +20,6 @@ class CongressTableViewController: UITableViewController, UITextFieldDelegate {
 		loadCongress()
 		self.searchField.delegate = self
 	}
-	
-	//	internal func loadCongress() {
-	//		APIRequestManager.manager.getCongressData { (data) in
-	//			if data != nil {
-	//
-	//				if let congress = Congress.congress(from: data!) {
-	//					print("We've got info! \(congress)")
-	//
-	//					self.congress = congress
-	//
-	//					DispatchQueue.main.async {
-	//						self.tableView.reloadData()
-	//					}
-	//				}
-	//			}
-	//		}
-	//	}
 	
 	internal func loadCongress(searchString: String = "Mark Twain") {
 		APIRequestManager.manager.getCongressData(searchString: searchString) { (data) in
@@ -48,7 +32,29 @@ class CongressTableViewController: UITableViewController, UITextFieldDelegate {
 					
 					DispatchQueue.main.async {
 						self.tableView.reloadData()
-
+						
+						// Pop up alerts, yo!
+						if let hitsGotten = Congress.hits(from: data!) {
+							self.hitsCount = hitsGotten
+							
+							var alertMessage = "\(self.hitsCount) "
+							if self.hitsCount == 0 {
+								alertMessage += "hits returned! Try again!"
+							}
+							else if self.hitsCount == 1 {
+								alertMessage += "hit returned! Displaying result."
+							}
+							else if self.hitsCount > 19 {
+								alertMessage += "hits returned! Displaying the first \(congress.count) results."
+							}
+							else {
+								alertMessage += "hits returned! Displaying results."
+							}
+							
+							let alert = UIAlertController(title: "\"\(searchString)\"", message: alertMessage, preferredStyle: UIAlertControllerStyle.alert)
+							alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+							self.present(alert, animated: true, completion: nil)
+						}
 					}
 				}
 			}
@@ -105,7 +111,6 @@ class CongressTableViewController: UITableViewController, UITextFieldDelegate {
 		self.view.endEditing(true)
 		if let search = searchField.text {
 			loadCongress(searchString: search)
-			
 		}
 		
 		return true
